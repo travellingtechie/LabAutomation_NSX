@@ -6,8 +6,20 @@
   gather_facts: False
   vars_files:
     - nsx_config.yaml
-- name: Create NSX-T IP Pools
-  include: create_ip_pool.yml
-  loop: "{{ ip_pools }}"
-  loop_control:
-    loop_var: ippool
+- name: Create ip pools
+    vmware.ansible_for_nsxt.nsxt_ip_pools:
+        hostname: "{{nsx_hostname}}"
+        username: "{{nsx_username}}"
+        password: "{{nsx_password}}"
+        validate_certs: False
+        display_name: "{{item.display_name}}"
+        subnets: "{{item.subnets}}"
+        state: present
+      with_items:
+        - "{{ip_pools}}"
+
+#- name: Create NSX-T IP Pools
+#  include_role: create_ip_pool.yml
+#  loop: "{{ ip_pools }}"
+#  loop_control:
+#    loop_var: ippool
