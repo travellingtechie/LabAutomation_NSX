@@ -6,8 +6,9 @@
   gather_facts: False
   vars_files:
     - nsx_config.yaml
-- name: Create ip pools
-    vmware.ansible_for_nsxt.nsxt_ip_pools:
+  tasks:
+    - name: Create ip pool
+      vmware.ansible_for_nsxt.nsxt_ip_pools:
         hostname: "{{nsx_hostname}}"
         username: "{{nsx_username}}"
         password: "{{nsx_password}}"
